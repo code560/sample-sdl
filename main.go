@@ -26,7 +26,7 @@ func LoadChunks(files []string) []*mix.Chunk {
 }
 
 func test() {
-	err := mix.Init(mix.INIT_MOD)
+	err := mix.Init(0)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,6 +49,10 @@ func test() {
 			"asset/audio/se_jump.wav",
 			"asset/audio/se_jump.wav",
 			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
 			"asset/audio/atari.wav",
 		})
 
@@ -56,8 +60,8 @@ func test() {
 
 	for i, chunk := range chunks {
 		defer chunk.Free()
-		chunk.Play(i, 3)
+		chunk.Play(i, 2)
 	}
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 }
