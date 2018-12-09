@@ -87,3 +87,27 @@ func test2() {
 
 	time.Sleep(10 * time.Second)
 }
+
+func test3() {
+	err := mix.Init(0)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer mix.Quit()
+
+	chanel := 2 // 2 is stereo
+	for i := 0; i < 100; i++ {
+		err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, chanel, 1024)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	// defer mix.CloseAudio()
+
+	mix.AllocateChannels(200)
+	chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
+	defer chunk.Free()
+	chunk.Play(-1, 0)
+
+	time.Sleep(10 * time.Second)
+}
