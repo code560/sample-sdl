@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	test()
+	test2()
 }
 
 func LoadChunks(files []string) []*mix.Chunk {
@@ -62,6 +62,28 @@ func test() {
 		defer chunk.Free()
 		chunk.Play(i, 2)
 	}
+
+	time.Sleep(10 * time.Second)
+}
+
+func test2() {
+	err := mix.Init(0)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer mix.Quit()
+
+	chanel := 2 // 2 is stereo
+	err = mix.OpenAudio(44100, mix.DEFAULT_FORMAT, chanel, 1024)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer mix.CloseAudio()
+
+	mix.AllocateChannels(100)
+	chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
+	defer chunk.Free()
+	chunk.Play(-1, 0)
 
 	time.Sleep(10 * time.Second)
 }
