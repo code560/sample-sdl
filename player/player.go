@@ -127,7 +127,7 @@ func newSdlPlayer() *sdlPlayer {
 }
 
 func (p *sdlPlayer) init() {
-	err := mix.Init(mix.INIT_MOD)
+	err := mix.Init(0)
 	if err != nil {
 		log.Fatal(err)
 	}
