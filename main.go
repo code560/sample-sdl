@@ -106,7 +106,6 @@ func test2() {
 		if ch_ != 1 {
 			log.Printf("not same ch: %d", ch_)
 		}
-		time.Sleep(time.Second)
 	}
 
 	time.Sleep(time.Second * 10)
