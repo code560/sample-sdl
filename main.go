@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	test20()
+	test10()
 }
 
 func LoadChunks(files []string) []*mix.Chunk {
