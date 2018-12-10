@@ -80,33 +80,43 @@ func test2() {
 	}
 	defer mix.CloseAudio()
 
-	mix.AllocateChannels(100)
-	chunks := LoadChunks(
-		[]string{
-			"asset/audio/bgm_wave.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/se_jump.wav",
-			"asset/audio/atari.wav",
-		})
-	// chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
-	// defer chunk.Free()
-	// chunk.Play(-1, 0)
-
-	for _, chunk := range chunks {
-		ch_, _ := chunk.Play(1, 0)
-		if ch_ != 1 {
-			log.Printf("not same ch: %d", ch_)
+	mix.ChannelFinished(func(ch int) {
+		chunk := mix.GetChunk(ch)
+		if chunk != nil {
+			chunk.Free()
+			log.Print("free chunk")
 		}
-	}
+	})
+
+	mix.AllocateChannels(100)
+	// test 1ch = n chunks
+	// chunks := LoadChunks(
+	// 	[]string{
+	// 		"asset/audio/bgm_wave.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/se_jump.wav",
+	// 		"asset/audio/atari.wav",
+	// 	})
+	// for _, chunk := range chunks {
+	// 	ch_, _ := chunk.Play(1, 0)
+	// 	if ch_ != 1 {
+	// 		log.Printf("not same ch: %d", ch_)
+	// 	}
+	// }
+
+	// test callback
+	chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
+	defer chunk.Free()
+	chunk.Play(-1, 0)
 
 	time.Sleep(time.Second * 10)
 }
