@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	test3()
+	test2()
 }
 
 func LoadChunks(files []string) []*mix.Chunk {
@@ -81,11 +81,35 @@ func test2() {
 	defer mix.CloseAudio()
 
 	mix.AllocateChannels(100)
-	chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
-	defer chunk.Free()
-	chunk.Play(-1, 0)
+	chunks := LoadChunks(
+		[]string{
+			"asset/audio/bgm_wave.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/se_jump.wav",
+			"asset/audio/atari.wav",
+		})
+	// chunk, _ := mix.LoadWAV("asset/audio/atari.wav")
+	// defer chunk.Free()
+	// chunk.Play(-1, 0)
 
-	time.Sleep(10 * time.Second)
+	for _, chunk := range chunks {
+		ch_, _ := chunk.Play(1, 0)
+		if ch_ != 1 {
+			log.Printf("not same ch: %d", ch_)
+		}
+		time.Sleep(time.Second)
+	}
+
+	time.Sleep(time.Second * 10)
 }
 
 func test3() {
