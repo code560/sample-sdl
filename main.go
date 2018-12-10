@@ -4,11 +4,12 @@ import (
 	"log"
 	"time"
 
+	"github.com/code560/sample-sdl/player"
 	"github.com/veandco/go-sdl2/mix"
 )
 
 func main() {
-	test2()
+	test20()
 }
 
 func LoadChunks(files []string) []*mix.Chunk {
@@ -143,4 +144,62 @@ func test3() {
 	chunk.Play(-1, 0)
 
 	time.Sleep(10 * time.Second)
+}
+
+func test9() {
+	p1 := player.GetPlayer("hoge")
+	go p1.Play("asset/audio/rusuden_04-2.wav")
+	time.Sleep(time.Millisecond * 10)
+
+	p1.Stop()
+	go p1.Play("asset/audio/okaerigoshujin_01.wav")
+
+	time.Sleep(10 * time.Second)
+}
+
+func test10() {
+	p1 := player.GetPlayer("hoge")
+	p2 := player.GetPlayer("foo")
+
+	go p1.Play("asset/audio/se_rain2.wav")
+	go p1.Play("asset/audio/se_jump.wav")
+	// go p1.Play("asset/audio/se_jump.wav")
+	// go p1.Play("asset/audio/se_jump.wav")
+	// go p1.Play("asset/audio/se_jump.wav")
+	// go p1.Play("asset/audio/se_jump.wav")
+	// go p1.Play("asset/audio/se_jump.wav")
+	go p1.Play("asset/audio/se_jump.wav")
+	go p1.Play("asset/audio/se_jump.wav")
+	go p1.Play("asset/audio/rusuden_04-2.wav")
+
+	time.Sleep(time.Millisecond * 500)
+
+	go p2.Play("asset/audio/info-girl1-start1.wav")
+	go p2.Play("asset/audio/se_swing.wav")
+	go p2.Play("asset/audio/se_swing.wav")
+	go p2.Play("asset/audio/se_swing.wav")
+	go p2.Play("asset/audio/baibai_01.wav")
+
+	p1.Stop()
+
+	p1.Play("asset/audio/okaerigoshujin_01.wav")
+}
+
+func test20() {
+	p1 := player.GetPlayer("hoge")
+	p2 := player.GetPlayer("foo")
+
+	go p1.Play("asset/audio/rusuden_04-2.wav")
+	go p2.Play("asset/audio/se_rain.wav")
+
+	time.Sleep(time.Second * 1)
+
+	p1.Volume(0)
+	p2.Volume(30)
+
+	time.Sleep(time.Second * 1)
+
+	p1.Volume(100)
+
+	time.Sleep(time.Second * 8)
 }
